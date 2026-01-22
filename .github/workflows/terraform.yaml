@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest # Ambiente de execução
     steps:
       - name: Checkout # Checkout do repositório
-        uses: actions/checkout@6.0.1 # Usando o checkout do GitHub Actions
+        uses: actions/checkout@v6.0.1 # Usando o checkout do GitHub Actions
 
       - name: "Configure AWS Credentials" # Configurando as credenciais da AWS
         uses: aws-actions/configure-aws-credentials@v5.1.1 #  Usando o configure-aws-credentials do GitHub Actions
