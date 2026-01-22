@@ -12,15 +12,6 @@ on: # Eventos que podem disparar o workflow
           - 'true' # Opção para executar o terraform apply
           - 'false' # Opção para não executar o terraform apply
 
-      destroy: # Input para destruir tudo que esta no tfplan.tfout
-        description: 'Destruir tudo que esta no tfplan.tfout' # Input para destruir tudo que esta no tfplan.tfout
-        required: true # Destruir tudo que esta no tfplan.tfout é obrigatório
-        default: 'false' # Input padrão
-        type: choice
-        options: # Destruir tudo que esta no tfplan.tfout é opção
-          - 'true' # Destruir tudo que esta no tfplan.tfout
-          - 'false' # Não destruir tudo que esta no tfplan.tfout
-
       plan_destroy: # Input para destruir tudo que esta no tfplan.tfout
         description: 'Planejar a destruição do Terraform' # Input para planejar a destruição do Terraform
         required: true # Planejar a destruição do Terraform é obrigatório
@@ -28,7 +19,16 @@ on: # Eventos que podem disparar o workflow
         type: choice
         options: # Planejar a destruição do Terraform é opção
           - 'true' # Planejar a destruição do Terraform
-          - 'false' # Não planejar a destruição do Terraform    
+          - 'false' # Não planejar a destruição do Terraform      
+
+      destroy: # Input para destruir tudo que esta no tfplan.tfout
+        description: 'Destruir tudo que esta no terraform' # Input para destruir tudo que esta no tfplan.tfout
+        required: true # Destruir tudo que esta no tfplan.tfout é obrigatório
+        default: 'false' # Input padrão
+        type: choice
+        options: # Destruir tudo que esta no tfplan.tfout é opção
+          - 'true' # Destruir tudo que esta no tfplan.tfout
+          - 'false' # Não destruir tudo que esta no tfplan.tfout  
 
 permissions:
   id-token: write # Permissão para o GitHub Actions gerar um token de autenticação
