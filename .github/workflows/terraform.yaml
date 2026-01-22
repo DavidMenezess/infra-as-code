@@ -9,8 +9,8 @@ on: # Eventos que podem disparar o workflow
         default: 'false' # Input padrão
         type: choice
         options: # Opções para o input
-          - true # Opção para executar o terraform apply
-          - false # Opção para não executar o terraform apply
+          - 'true' # Opção para executar o terraform apply
+          - 'false' # Opção para não executar o terraform apply
 
 permissions:
   id-token: write # Permissão para o GitHub Actions gerar um token de autenticação
