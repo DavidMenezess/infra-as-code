@@ -1,0 +1,47 @@
+name: Terraform CI/CD
+
+on: # Eventos que podem disparar o workflow
+  workflow_dispatch: # Disparado manualmente
+    inputs: # Inputs para o workflow
+      apply: # Input para executar o terraform apply
+        description: 'Executar o terraform apply' # Input para executar o terraform apply
+        required: true # Input obrigatório
+        default: 'false' # Input padrão
+        type: choice
+        options: # Opções para o input
+          - true # Opção para executar o terraform apply
+          - false # Opção para não executar o terraform apply
+
+permissions:
+  id-token: write # Permissão para o GitHub Actions gerar um token de autenticação
+  contents: read # Permissão para o GitHub Actions ler o conteúdo do repositório
+
+jobs:
+  job1:
+    name: Terraform
+    runs-on: ubuntu-latest # Ambiente de execução
+    steps:
+      - name: Checkout # Checkout do repositório
+        uses: actions/checkout@5.0.0 # Usando o checkout do GitHub Actions
+
+      - name: "Configure AWS Credentials" # Configurando as credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v5.1.1 #  Usando o configure-aws-credentials do GitHub Actions
+        with:
+          role-to-assume: arn:aws:iam::875551509428:role/GithubInfRole
+          aws-region: us-east-1
+
+      - name: HashiCorp - Setup Terraform # Setup do Terraform
+        uses: hashicorp/setup-terraform@v3.1.2 # Usando o setup-terraform do GitHub Actions
+
+      - name: Terraform Init # Inicialização do Terraform
+        run: terraform init # Executando o terraform init
+
+      - name: Terraform validate # Validação do Terraform
+        run: terraform validate # Executando o terraform validate
+
+      - name: Terraform plan # Plano do Terraform
+        run: terraform plan -out=tfplan # Executando o terraform plan
+
+      - name: Terraform apply # Aplicação do Terraform
+        run: terraform apply -auto-approve tfplan # Executando o terraform apply
+        if: github.event.inputs.apply == 'true' # Executando o terraform apply se o apply for true
