@@ -12,6 +12,24 @@ on: # Eventos que podem disparar o workflow
           - 'true' # Opção para executar o terraform apply
           - 'false' # Opção para não executar o terraform apply
 
+      destroy: # Input para destruir tudo que esta no tfplan.tfout
+        description: 'Destruir tudo que esta no tfplan.tfout' # Input para destruir tudo que esta no tfplan.tfout
+        required: true # Destruir tudo que esta no tfplan.tfout é obrigatório
+        default: 'false' # Input padrão
+        type: choice
+        options: # Destruir tudo que esta no tfplan.tfout é opção
+          - 'true' # Destruir tudo que esta no tfplan.tfout
+          - 'false' # Não destruir tudo que esta no tfplan.tfout
+
+      plan_destroy: # Input para destruir tudo que esta no tfplan.tfout
+        description: 'Planejar a destruição do Terraform' # Input para planejar a destruição do Terraform
+        required: true # Planejar a destruição do Terraform é obrigatório
+        default: 'false' # Input padrão
+        type: choice
+        options: # Planejar a destruição do Terraform é opção
+          - 'true' # Planejar a destruição do Terraform
+          - 'false' # Não planejar a destruição do Terraform    
+
 permissions:
   id-token: write # Permissão para o GitHub Actions gerar um token de autenticação
   contents: read # Permissão para o GitHub Actions ler o conteúdo do repositório
@@ -40,8 +58,16 @@ jobs:
         run: terraform validate # Executando o terraform validate
 
       - name: Terraform plan # Plano do Terraform
-        run: terraform plan -out=tfplan # Executando o terraform plan
+        run: terraform plan -out=tfplan.tfout # Executando o terraform plan
 
       - name: Terraform apply # Aplicação do Terraform
-        run: terraform apply -auto-approve tfplan # Executando o terraform apply
+        run: terraform apply -auto-approve tfplan.tfout # Executando o terraform apply
         if: github.event.inputs.apply == 'true' # Executando o terraform apply se o apply for true
+
+      - name: Plan Destroy # Plano de destruição do Terraform
+        run: terraform plan -destroy -out=tfplan.tfout # Executando o terraform plan de destruição
+        if: github.event.inputs.plan_destroy == 'true' # Executando o terraform plan de destruição se o plan_destroy for true
+
+      - name: Terraform destroy # Destruição do Terraform
+        run: terraform apply -destroy -auto-approve  tfplan.tfout # Destruir tudo que esta no tfplan.tfout
+        if: github.event.inputs.destroy == 'true' # Executando o terraform destroy se o destroy for true
