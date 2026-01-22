@@ -58,16 +58,16 @@ jobs:
         run: terraform validate # Executando o terraform validate
 
       - name: Terraform Plan # Plano do Terraform
-        run: terraform plan -out=tfplan.tfout # Executando o terraform plan
+        run: terraform plan -out=tfplan # Executando o terraform plan
 
       - name: Terraform Apply # Aplicação do Terraform
-        run: terraform apply -auto-approve tfplan.tfout # Executando o terraform apply
+        run: terraform apply -auto-approve tfplan # Executando o terraform apply
         if: github.event.inputs.apply == 'true' # Executando o terraform apply se o apply for true
 
       - name: Plan Destroy # Plano de destruição do Terraform
-        run: terraform plan -destroy tfplan.tfout # Executando o terraform plan de destruição
+        run: terraform plan -destroy tfplan.tfout.destroy # Executando o terraform plan de destruição
         if: github.event.inputs.plan_destroy == 'true' # Executando o terraform plan de destruição se o plan_destroy for true
 
       - name: Terraform Destroy # Destruição do Terraform
-        run: terraform apply -destroy -auto-approve  tfplan.tfout # Destruir tudo que esta no tfplan.tfout
+        run: terraform apply -auto-approve  tfplan.destroy # Destruir tudo que esta no tfplan.tfout
         if: github.event.inputs.destroy == 'true' # Executando o terraform destroy se o destroy for true
