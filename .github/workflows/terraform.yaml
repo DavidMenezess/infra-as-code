@@ -27,7 +27,7 @@ jobs:
       - name: "Configure AWS Credentials" # Configurando as credenciais da AWS
         uses: aws-actions/configure-aws-credentials@v5.1.1 #  Usando o configure-aws-credentials do GitHub Actions
         with:
-          role-to-assume: arn:aws:iam::875551509428:role/GithubInfRole
+          role-to-assume: arn:aws:iam::875551509428:role/GithubInfraRole
           aws-region: us-east-1
 
       - name: HashiCorp - Setup Terraform # Setup do Terraform
