@@ -65,7 +65,7 @@ jobs:
         if: github.event.inputs.apply == 'true' # Executando o terraform apply se o apply for true
 
       - name: Plan Destroy # Plano de destruição do Terraform
-        run: terraform plan -destroy -out=tfplan.tfout # Executando o terraform plan de destruição
+        run: terraform plan -destroy tfplan.tfout # Executando o terraform plan de destruição
         if: github.event.inputs.plan_destroy == 'true' # Executando o terraform plan de destruição se o plan_destroy for true
 
       - name: Terraform Destroy # Destruição do Terraform
