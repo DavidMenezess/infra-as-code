@@ -1,5 +1,5 @@
-sudo su
+#!/bin/bash
 apt-get update -y
-apt-get install -y docker
-service docker start
-usermod -a -G docker ubuntu
+apt-get install -y docker.io
+systemctl enable --now docker
+usermod -aG docker ubuntu
