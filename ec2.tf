@@ -4,6 +4,7 @@ resource "aws_instance" "website_server" {                           # Criando a
   key_name               = "sshec2"                                  # Chave SSH para a instância
   vpc_security_group_ids = [aws_security_group.website_sg.id]        # Associando o security group à instância
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name # Associando o profile à instância
+  user_data              = file("user_data.sh")                       # Arquivo de script de inicialização
 
   tags = {
     Name        = "ec2-website"
