@@ -18,6 +18,7 @@ e um workflow de GitHub Actions para aplicar e destruir a infra sob demanda.
 - `ec2.tf`: EC2 + Security Group + regras.
 - `iam.tf`: role e instance profile.
 - `ecr.tf`: repositorio ECR privado.
+- `user_data.sh`: instala Docker automaticamente na EC2.
 - `.github/workflows/terraform.yaml`: pipeline CI/CD.
 
 ## Pré-requisitos
@@ -50,6 +51,9 @@ o que mudar, por que mudar e como encontrar o valor certo.
   - `cidr_ipv4` (regra SSH)
     - **Por que mudar:** libera SSH apenas para o seu IP (seguranca).
     - **Como achar:** descubra seu IP publico em um site de "meu IP".
+- `user_data.sh`
+  - **O que faz:** instala e inicia o Docker automaticamente na EC2.
+  - **Por que existe:** evita instalacao manual depois do provisionamento.
 - `backend.tf`
   - `bucket`
     - **Por que mudar:** o state remoto precisa de um bucket real na sua conta.
