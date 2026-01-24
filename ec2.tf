@@ -29,7 +29,7 @@ resource "aws_security_group" "website_sg" {                    # Criando o secu
 # Regra de entrada para SSH
 resource "aws_vpc_security_group_ingress_rule" "ssh_rule" {
   security_group_id = aws_security_group.website_sg.id # Associando o security group à instância
-  cidr_ipv4         = "201.32.30.145/32"               # IP do meu computador
+  cidr_ipv4         = "0.0.0.0/0"               # IP do meu computador
   from_port         = 22                               # Porta SSH
   ip_protocol       = "tcp"
   to_port           = 22 # Porta SSH
